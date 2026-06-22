@@ -1,0 +1,103 @@
+import java.util.*;
+
+class Contact {
+    String name;
+    String phone;
+    String email;
+
+    Contact(String name, String phone, String email) {
+        this.name = name;
+        this.phone = phone;
+        this.email = email;
+    }
+}
+
+public class Main {
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+        ArrayList<Contact> contacts = new ArrayList<>();
+        int choice;
+
+        do {
+            System.out.println("\n=== Contact Management System ===");
+            System.out.println("1. Add Contact");
+            System.out.println("2. View Contacts");
+            System.out.println("3. Edit Contact");
+            System.out.println("4. Delete Contact");
+            System.out.println("5. Exit");
+            System.out.print("Enter choice: ");
+            choice = sc.nextInt();
+            sc.nextLine();
+
+            switch(choice) {
+                case 1:
+                    System.out.print("Enter Name: ");
+                    String name = sc.nextLine();
+
+                    System.out.print("Enter Phone: ");
+                    String phone = sc.nextLine();
+
+                    System.out.print("Enter Email: ");
+                    String email = sc.nextLine();
+
+                    contacts.add(new Contact(name, phone, email));
+                    System.out.println("Contact Added!");
+                    break;
+
+                case 2:
+                    if (contacts.isEmpty()) {
+                        System.out.println("No contacts found.");
+                    } else {
+                        for (int i = 0; i < contacts.size(); i++) {
+                            Contact c = contacts.get(i);
+                            System.out.println((i + 1) + ". " +
+                                c.name + " | " + c.phone + " | " + c.email);
+                        }
+                    }
+                    break;
+
+                case 3:
+                    System.out.print("Enter contact number to edit: ");
+                    int edit = sc.nextInt() - 1;
+                    sc.nextLine();
+
+                    if (edit >= 0 && edit < contacts.size()) {
+                        System.out.print("New Name: ");
+                        contacts.get(edit).name = sc.nextLine();
+
+                        System.out.print("New Phone: ");
+                        contacts.get(edit).phone = sc.nextLine();
+
+                        System.out.print("New Email: ");
+                        contacts.get(edit).email = sc.nextLine();
+
+                        System.out.println("Contact Updated!");
+                    } else {
+                        System.out.println("Invalid Contact Number");
+                    }
+                    break;
+
+                case 4:
+                    System.out.print("Enter contact number to delete: ");
+                    int delete = sc.nextInt() - 1;
+
+                    if (delete >= 0 && delete < contacts.size()) {
+                        contacts.remove(delete);
+                        System.out.println("Contact Deleted!");
+                    } else {
+                        System.out.println("Invalid Contact Number");
+                    }
+                    break;
+
+                case 5:
+                    System.out.println("Exiting...");
+                    break;
+
+                default:
+                    System.out.println("Invalid choice");
+            }
+        } while(choice != 5);
+
+        sc.close();
+    }
+}
